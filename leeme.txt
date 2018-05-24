@@ -1,0 +1,7 @@
+MC_datos es la memoria cache de datos. Está conectada al procesador y al bus
+UC_MC: es el controlador que debéis diseñar. En principio es el único archivo que debéis tocar. Aunque si hacéis mejoras en el sistema podéis tocar también la MC.
+MD_cont: es el módulo de memoria principal. Está conectado al bus. E incluye una memoria similar a la que teníamos en el MIPs pero con una señal de enable adicional.(memoriaRAM_enable)
+MD_mas_MC: es el sistema de memoria completo con MC, MD y el bus.
+los registros y contadores s eusan en los controladores para almacenar y llevar la cuenta.
+Test_MD: es un test para ver cómo reacciona MD_cont a las solicitudes que le llegan por el bus
+Testbench_MD_mas_MC_alumnos es un test del sistema de memoria. Prueba algunas cosas, debéis ampliarlo.
