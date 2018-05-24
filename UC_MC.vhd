@@ -1,20 +1,20 @@
 ----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
--- Create Date:    13:38:18 05/15/2014 
--- Design Name: 
--- Module Name:    UC_slave - Behavioral 
--- Project Name: 
--- Target Devices: 
--- Tool versions: 
--- Description: 
+-- Company:
+-- Engineer:
 --
--- Dependencies: 
+-- Create Date:    13:38:18 05/15/2014
+-- Design Name:
+-- Module Name:    UC_slave - Behavioral
+-- Project Name:
+-- Target Devices:
+-- Tool versions:
+-- Description:
 --
--- Revision: 
+-- Dependencies:
+--
+-- Revision:
 -- Revision 0.01 - File Created
--- Additional Comments: la UC incluye un contador de 2 bits para llevar la cuenta de las transferencias de bloque y una máquina de estados
+-- Additional Comments: la UC incluye un contador de 2 bits para llevar la cuenta de las transferencias de bloque y una mï¿½quina de estados
 --
 ----------------------------------------------------------------------------------
 library IEEE;
@@ -36,19 +36,19 @@ entity UC_MC is
 			WE : in  STD_LOGIC;
 			hit : in  STD_LOGIC; --se activa si hay acierto
 			dirty_bit : in  STD_LOGIC; --avisa si el bloque a reemplazar es sucio
-			bus_TRDY : in  STD_LOGIC; --indica que la memoria no puede realizar la operación solicitada en este ciclo
-			Bus_DevSel: in  STD_LOGIC; --indica que la memoria ha reconocido que la dirección está dentro de su rango
+			bus_TRDY : in  STD_LOGIC; --indica que la memoria no puede realizar la operaciï¿½n solicitada en este ciclo
+			Bus_DevSel: in  STD_LOGIC; --indica que la memoria ha reconocido que la direcciï¿½n estï¿½ dentro de su rango
 			MC_RE : out  STD_LOGIC; --RE y WE de la MC
             MC_WE : out  STD_LOGIC;
             bus_RE : out  STD_LOGIC; --RE y WE de la MC
             bus_WE : out  STD_LOGIC;
             MC_tags_WE : out  STD_LOGIC; -- para escribir la etiqueta en la memoria de etiquetas
-            palabra : out  STD_LOGIC_VECTOR (1 downto 0);--indica la palabra actual dentro de una transferencia de bloque (1ª, 2ª...)
-            mux_origen: out STD_LOGIC; -- Se utiliza para elegir si el origen de la dirección y el dato es el Mips (cuando vale 0) o la UC y el bus (cuando vale 1)
-            ready : out  STD_LOGIC; -- indica si podemos procesar la orden actual del MIPS en este ciclo. En caso contrario habrá que detener el MIPs
-            MC_send_addr : out  STD_LOGIC; --ordena que se envíen la dirección y las señales de control al bus
-            MC_send_data : out  STD_LOGIC; --ordena que se envíen los datos
-            Frame : out  STD_LOGIC; --indica que la operación no ha terminado
+            palabra : out  STD_LOGIC_VECTOR (1 downto 0);--indica la palabra actual dentro de una transferencia de bloque (1ï¿½, 2ï¿½...)
+            mux_origen: out STD_LOGIC; -- Se utiliza para elegir si el origen de la direcciï¿½n y el dato es el Mips (cuando vale 0) o la UC y el bus (cuando vale 1)
+            ready : out  STD_LOGIC; -- indica si podemos procesar la orden actual del MIPS en este ciclo. En caso contrario habrï¿½ que detener el MIPs
+            MC_send_addr : out  STD_LOGIC; --ordena que se envï¿½en la direcciï¿½n y las seï¿½ales de control al bus
+            MC_send_data : out  STD_LOGIC; --ordena que se envï¿½en los datos
+            Frame : out  STD_LOGIC; --indica que la operaciï¿½n no ha terminado
 			Send_dirty	: out  STD_LOGIC; --indica que hay que enviar el bloque sucio por el bus
 			Update_dirty	: out  STD_LOGIC; --indica que hay que actualizar el bit dirty
 			Replace_block	: out  STD_LOGIC -- indica que se ha reemplzado un bloque
@@ -64,19 +64,19 @@ component counter_2bits is
 		           count_enable : in  STD_LOGIC;
 		           count : out  STD_LOGIC_VECTOR (1 downto 0)
 					  );
-end component;		           
-type state_type is (Inicio, Espera, Mem, TheEnd); -- Poner aquí el nombre de los estados. Usad nombres descriptivos
-signal state, next_state : state_type; 
-signal last_word: STD_LOGIC; --se activa cuando se está pidiendo la última palabra de un bloque
+end component;
+type state_type is (Inicio, Espera, Mem, TheEnd, noReady); -- Poner aquï¿½ el nombre de los estados. Usad nombres descriptivos
+signal state, next_state : state_type;
+signal last_word: STD_LOGIC; --se activa cuando se estï¿½ pidiendo la ï¿½ltima palabra de un bloque
 signal count_enable: STD_LOGIC; -- se activa si se ha recibido una palabra de un bloque para que se incremente el contador de palabras
 signal palabra_UC : STD_LOGIC_VECTOR (1 downto 0);
 begin
- 
- 
---el contador nos dice cuantas palabras hemos recibido. Se usa para saber cuando se termina la transferencia del bloque y para direccionar la palabra en la que se escribe el dato leido del bus en la MC
-word_counter: counter_2bits port map (clk, reset, count_enable, palabra_UC); --indica la palabra actual dentro de una transferencia de bloque (1ª, 2ª...)
 
-last_word <= '1' when palabra_UC="11" else '0';--se activa cuando estamos pidiendo la última palabra
+
+--el contador nos dice cuantas palabras hemos recibido. Se usa para saber cuando se termina la transferencia del bloque y para direccionar la palabra en la que se escribe el dato leido del bus en la MC
+word_counter: counter_2bits port map (clk, reset, count_enable, palabra_UC); --indica la palabra actual dentro de una transferencia de bloque (1ï¿½, 2ï¿½...)
+
+last_word <= '1' when palabra_UC="11" else '0';--se activa cuando estamos pidiendo la ï¿½ltima palabra
 
 palabra <= palabra_UC;
 
@@ -87,35 +87,35 @@ palabra <= palabra_UC;
             state <= Inicio;
          else
             state <= next_state;
-         end if;        
+         end if;
       end if;
    end process;
- 
+
    --MEALY State-Machine - Outputs based on state and inputs
    OUTPUT_DECODE: process (state, hit, last_word, bus_TRDY, RE, WE, dirty_bit, Bus_DevSel)
    begin
-			  -- valores por defecto, si no se asigna otro valor en un estado valdrán lo que se asigna aquí
+			  -- valores por defecto, si no se asigna otro valor en un estado valdrï¿½n lo que se asigna aquï¿½
 		MC_WE <= '0';
 		bus_RE <= '0';
 		bus_WE <= '0';
         MC_tags_WE <= '0';
-        MC_RE <= RE;--leemos en la cache si se solicita una lectura de una instrucción
+        MC_RE <= RE;--leemos en la cache si se solicita una lectura de una instrucciï¿½n
         ready <= '0';
         mux_origen <= '0';
         MC_send_addr <= '0';
         MC_send_data <= '0';
-        next_state <= state;  
+        next_state <= state;
 		count_enable <= '0';
 		Frame <= '0';
 		Send_dirty <= '0';
 		Update_dirty <= '0';
-		Replace_block <= '0';	
-			
-        -- Estado Inicio          
+		Replace_block <= '0';
+
+        -- Estado Inicio
     if (state = Inicio and RE= '0' and WE= '0') then -- si no piden nada no hacemos nada
 			next_state <= Inicio;
 			ready <= '1';
-        -- Incluir aquí vuestra máquina de estados. Mirar el ejemplo en las transparencas de VHDL
+        -- Incluir aquï¿½ vuestra mï¿½quina de estados. Mirar el ejemplo en las transparencas de VHDL
     elsif (state = Inicio and hit = '1' and RE = '1') then
       next_state <= Inicio;
       ready <= '1';
@@ -206,7 +206,7 @@ palabra <= palabra_UC;
         ready <= '0';
         mux_origen <= '1';
         Frame <= '1';
-        palabra <= "00";
+        --palabra <= "00";
         MC_tags_WE <= '0';
         MC_RE <= '1';
         MC_WE <= '0';
@@ -215,21 +215,21 @@ palabra <= palabra_UC;
         bus_RE <= '0';
         bus_WE <= '1';
         Send_dirty <= '1';
-        count_enable <= '1';
+        count_enable <= '0';
       else
         next_state <= Mem;
         ready <= '0';
         mux_origen <= '1';
         Frame <= '1';
-        palabra <= "00";
+        --palabra <= "00";
         MC_tags_WE <= '0';
         MC_RE <= '0';
         MC_WE <= '1';
-        MC_send_data <= '1';
+        --MC_send_data <= '1';
         Update_dirty <= '0';
         bus_RE <= '1';
         bus_WE <= '0';
-        count_enable <= '1';
+        count_enable <= '0';
       end if;
     elsif (state = Mem and last_word = '0' and bus_TRDY = '1') then
       if (dirty_bit = '1') then
@@ -252,7 +252,6 @@ palabra <= palabra_UC;
         mux_origen <= '1';
         Frame <= '1';
         MC_tags_WE <= '0';
-        MC_send_data <= '1';
         MC_RE <= '0';
         MC_WE <= '1';
         Update_dirty <= '0';
@@ -261,18 +260,20 @@ palabra <= palabra_UC;
         count_enable <= '1';
       end if;
     elsif (state = Mem and bus_TRDY = '0') then
-      next_state <= Mem;
+      next_state <= noReady;
       Frame <= '1';
       ready <= '0';
       mux_origen <= '1';
-      MC_send_data <= '1';
       MC_RE <= '0';
+      bus_RE <= not dirty_bit;
+      bus_WE <= dirty_bit;
+      count_enable <= '1';
     elsif (state = Mem and last_word = '1' and bus_TRDY = '1') then
       if(dirty_bit = '1') then
         next_state <= Espera;
         ready <= '0';
         mux_origen <= '1';
-        Frame <= '0';
+        Frame <= '1';
         MC_tags_WE <= '0';
         MC_send_data <= '1';
         MC_RE <= '1';
@@ -285,9 +286,70 @@ palabra <= palabra_UC;
         next_state <= TheEnd;
         ready <= '0';
         mux_origen <= '1';
-        Frame <= '0';
+        Frame <= '1';
         MC_tags_WE <= '1';
+        MC_RE <= '0';
+        MC_WE <= '1';
+        Update_dirty <= '0';
+        bus_RE <= '1';
+        bus_WE <= '0';
+        count_enable <= '1';
+      end if;
+    elsif (state = noReady and bus_TRDY = '0') then
+      next_state <= noReady;
+      Frame <= '1';
+      ready <= '0';
+      mux_origen <= '1';
+      MC_RE <= '0';
+      bus_RE <= not dirty_bit;
+      bus_WE <= dirty_bit;
+    elsif (state = noReady and bus_TRDY = '1' and last_word='0') then
+      if (dirty_bit = '1') then
+        next_state <= Mem;
+        ready <= '0';
+        mux_origen <= '1';
+        Frame <= '1';
+        MC_tags_WE <= '0';
         MC_send_data <= '1';
+        MC_RE <= '1';
+        MC_WE <= '0';
+        Update_dirty <= '0';
+        bus_RE <= '0';
+        bus_WE <= '1';
+        Send_dirty <= '1';
+      else
+        next_state <= Mem;
+        ready <= '0';
+        mux_origen <= '1';
+        Frame <= '1';
+        MC_tags_WE <= '0';
+        MC_RE <= '0';
+        MC_WE <= '1';
+        Update_dirty <= '0';
+        bus_RE <= '1';
+        bus_WE <= '0';
+      end if;
+    elsif (state = noReady and bus_TRDY = '1' and last_word='1') then
+      if (dirty_bit = '1') then
+        next_state <= TheEnd;
+        ready <= '0';
+        mux_origen <= '1';
+        Frame <= '1';
+        MC_tags_WE <= '0';
+        MC_send_data <= '1';
+        MC_RE <= '1';
+        MC_WE <= '0';
+        Update_dirty <= '1';
+        Replace_block <= '1';
+        bus_RE <= '0';
+        bus_WE <= '1';
+        Send_dirty <= '1';
+      else
+        next_state <= TheEnd;
+        ready <= '0';
+        mux_origen <= '1';
+        Frame <= '1';
+        MC_tags_WE <= '1';
         MC_RE <= '0';
         MC_WE <= '1';
         Update_dirty <= '0';
@@ -308,4 +370,3 @@ palabra <= palabra_UC;
 		end if;
    end process;
 end Behavioral;
-
