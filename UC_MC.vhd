@@ -206,7 +206,6 @@ palabra <= palabra_UC;
         ready <= '0';
         mux_origen <= '1';
         Frame <= '1';
-        --palabra <= "00";
         MC_tags_WE <= '0';
         MC_RE <= '1';
         MC_WE <= '0';
@@ -215,21 +214,19 @@ palabra <= palabra_UC;
         bus_RE <= '0';
         bus_WE <= '1';
         Send_dirty <= '1';
-        count_enable <= '0';
+        count_enable <= '1';
       else
         next_state <= Mem;
         ready <= '0';
         mux_origen <= '1';
         Frame <= '1';
-        --palabra <= "00";
         MC_tags_WE <= '0';
         MC_RE <= '0';
         MC_WE <= '1';
-        --MC_send_data <= '1';
         Update_dirty <= '0';
         bus_RE <= '1';
         bus_WE <= '0';
-        count_enable <= '0';
+        count_enable <= '1';
       end if;
     elsif (state = Mem and last_word = '0' and bus_TRDY = '1') then
       if (dirty_bit = '1') then
@@ -260,14 +257,14 @@ palabra <= palabra_UC;
         count_enable <= '1';
       end if;
     elsif (state = Mem and bus_TRDY = '0') then
-      next_state <= noReady;
+      next_state <= Mem;
       Frame <= '1';
       ready <= '0';
       mux_origen <= '1';
       MC_RE <= '0';
       bus_RE <= not dirty_bit;
       bus_WE <= dirty_bit;
-      count_enable <= '1';
+      count_enable <= '0';
     elsif (state = Mem and last_word = '1' and bus_TRDY = '1') then
       if(dirty_bit = '1') then
         next_state <= Espera;
@@ -295,70 +292,9 @@ palabra <= palabra_UC;
         bus_WE <= '0';
         count_enable <= '1';
       end if;
-    elsif (state = noReady and bus_TRDY = '0') then
-      next_state <= noReady;
-      Frame <= '1';
-      ready <= '0';
-      mux_origen <= '1';
-      MC_RE <= '0';
-      bus_RE <= not dirty_bit;
-      bus_WE <= dirty_bit;
-    elsif (state = noReady and bus_TRDY = '1' and last_word='0') then
-      if (dirty_bit = '1') then
-        next_state <= Mem;
-        ready <= '0';
-        mux_origen <= '1';
-        Frame <= '1';
-        MC_tags_WE <= '0';
-        MC_send_data <= '1';
-        MC_RE <= '1';
-        MC_WE <= '0';
-        Update_dirty <= '0';
-        bus_RE <= '0';
-        bus_WE <= '1';
-        Send_dirty <= '1';
-      else
-        next_state <= Mem;
-        ready <= '0';
-        mux_origen <= '1';
-        Frame <= '1';
-        MC_tags_WE <= '0';
-        MC_RE <= '0';
-        MC_WE <= '1';
-        Update_dirty <= '0';
-        bus_RE <= '1';
-        bus_WE <= '0';
-      end if;
-    elsif (state = noReady and bus_TRDY = '1' and last_word='1') then
-      if (dirty_bit = '1') then
-        next_state <= TheEnd;
-        ready <= '0';
-        mux_origen <= '1';
-        Frame <= '1';
-        MC_tags_WE <= '0';
-        MC_send_data <= '1';
-        MC_RE <= '1';
-        MC_WE <= '0';
-        Update_dirty <= '1';
-        Replace_block <= '1';
-        bus_RE <= '0';
-        bus_WE <= '1';
-        Send_dirty <= '1';
-      else
-        next_state <= TheEnd;
-        ready <= '0';
-        mux_origen <= '1';
-        Frame <= '1';
-        MC_tags_WE <= '1';
-        MC_RE <= '0';
-        MC_WE <= '1';
-        Update_dirty <= '0';
-        bus_RE <= '1';
-        bus_WE <= '0';
-      end if;
     elsif (state = TheEnd) then
-      next_state <= Inicio;
-      ready <= '1';
+      next_state <= noReady;
+      ready <= '0';
       mux_origen <= '0';
       Frame <= '0';
       MC_tags_WE <= '0';
@@ -367,6 +303,9 @@ palabra <= palabra_UC;
       Update_dirty <= '0';
       bus_RE <= '0';
       bus_WE <= '0';
+      count_enable <= '1';
+    elsif (state = noReady) then
+      ready <= '1';
 		end if;
    end process;
 end Behavioral;

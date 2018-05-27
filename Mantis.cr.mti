@@ -7,6 +7,16 @@ Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 
 -- Compiling entity FPP_ADD_SUB
 -- Compiling architecture Arch of FPP_ADD_SUB
 
+} {} {}} C:/Users/Daniel/Desktop/fuentes_alumnos/memoriaRAM_enable.vhd {1 {vcom -work Mantis -2002 -explicit -stats=none C:/Users/Daniel/Desktop/fuentes_alumnos/memoriaRAM_enable.vhd
+Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 2015
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package std_logic_arith
+-- Loading package STD_LOGIC_UNSIGNED
+-- Compiling entity RAM_128_32
+-- Compiling architecture Behavioral of RAM_128_32
+
 } {} {}} C:/Users/Daniel/Desktop/fuentes_alumnos/UC_Mips.vhd {1 {vcom -work Mantis -2002 -explicit -stats=none C:/Users/Daniel/Desktop/fuentes_alumnos/UC_Mips.vhd
 Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 2015
 -- Loading package STANDARD
@@ -32,16 +42,6 @@ Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 
 -- Compiling entity Test_MD
 -- Compiling architecture behavior of Test_MD
 
-} {} {}} C:/Users/Daniel/Desktop/fuentes_alumnos/memoriaRAM_enable.vhd {1 {vcom -work Mantis -2002 -explicit -stats=none C:/Users/Daniel/Desktop/fuentes_alumnos/memoriaRAM_enable.vhd
-Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 2015
--- Loading package STANDARD
--- Loading package TEXTIO
--- Loading package std_logic_1164
--- Loading package std_logic_arith
--- Loading package STD_LOGIC_UNSIGNED
--- Compiling entity RAM_128_32
--- Compiling architecture Behavioral of RAM_128_32
-
 } {} {}} C:/Users/Daniel/Desktop/fuentes_alumnos/Ext_signo.vhd {1 {vcom -work Mantis -2002 -explicit -stats=none C:/Users/Daniel/Desktop/fuentes_alumnos/Ext_signo.vhd
 Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 2015
 -- Loading package STANDARD
@@ -49,16 +49,6 @@ Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 
 -- Loading package std_logic_1164
 -- Compiling entity Ext_signo
 -- Compiling architecture Behavioral of Ext_signo
-
-} {} {}} C:/Users/Daniel/Desktop/fuentes_alumnos/BReg.vhd {1 {vcom -work Mantis -2002 -explicit -stats=none C:/Users/Daniel/Desktop/fuentes_alumnos/BReg.vhd
-Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 2015
--- Loading package STANDARD
--- Loading package TEXTIO
--- Loading package std_logic_1164
--- Loading package std_logic_arith
--- Loading package STD_LOGIC_UNSIGNED
--- Compiling entity BReg
--- Compiling architecture Behavioral of BReg
 
 } {} {}} C:/Users/Daniel/Desktop/fuentes_alumnos/counter.vhd {1 {vcom -work Mantis -2002 -explicit -stats=none C:/Users/Daniel/Desktop/fuentes_alumnos/counter.vhd
 Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 2015
@@ -70,6 +60,16 @@ Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 
 -- Loading package NUMERIC_STD
 -- Compiling entity counter
 -- Compiling architecture Behavioral of counter
+
+} {} {}} C:/Users/Daniel/Desktop/fuentes_alumnos/BReg.vhd {1 {vcom -work Mantis -2002 -explicit -stats=none C:/Users/Daniel/Desktop/fuentes_alumnos/BReg.vhd
+Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 2015
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package std_logic_arith
+-- Loading package STD_LOGIC_UNSIGNED
+-- Compiling entity BReg
+-- Compiling architecture Behavioral of BReg
 
 } {} {}} C:/Users/Daniel/Desktop/fuentes_alumnos/Banco_MEM.vhd {1 {vcom -work Mantis -2002 -explicit -stats=none C:/Users/Daniel/Desktop/fuentes_alumnos/Banco_MEM.vhd
 Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 2015
@@ -108,14 +108,6 @@ Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 
 -- Compiling entity ALU
 -- Compiling architecture Behavioral of ALU
 
-} {} {}} C:/Users/Daniel/Desktop/fuentes_alumnos/reg32.vhd {1 {vcom -work Mantis -2002 -explicit -stats=none C:/Users/Daniel/Desktop/fuentes_alumnos/reg32.vhd
-Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 2015
--- Loading package STANDARD
--- Loading package TEXTIO
--- Loading package std_logic_1164
--- Compiling entity reg32
--- Compiling architecture Behavioral of reg32
-
 } {} {}} C:/Users/Daniel/Desktop/fuentes_alumnos/Banco_WB.vhd {1 {vcom -work Mantis -2002 -explicit -stats=none C:/Users/Daniel/Desktop/fuentes_alumnos/Banco_WB.vhd
 Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 2015
 -- Loading package STANDARD
@@ -124,6 +116,14 @@ Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 
 -- Compiling entity Banco_WB
 -- Compiling architecture Behavioral of Banco_WB
 
+} {} {}} C:/Users/Daniel/Desktop/fuentes_alumnos/reg32.vhd {1 {vcom -work Mantis -2002 -explicit -stats=none C:/Users/Daniel/Desktop/fuentes_alumnos/reg32.vhd
+Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 2015
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling entity reg32
+-- Compiling architecture Behavioral of reg32
+
 } {} {}} C:/Users/Daniel/Desktop/fuentes_alumnos/mux2_1.vhd {1 {vcom -work Mantis -2002 -explicit -stats=none C:/Users/Daniel/Desktop/fuentes_alumnos/mux2_1.vhd
 Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 2015
 -- Loading package STANDARD
@@ -131,14 +131,6 @@ Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 
 -- Loading package std_logic_1164
 -- Compiling entity mux2_1
 -- Compiling architecture Behavioral of mux2_1
-
-} {} {}} C:/Users/Daniel/Desktop/fuentes_alumnos/reg7.vhd {1 {vcom -work Mantis -2002 -explicit -stats=none C:/Users/Daniel/Desktop/fuentes_alumnos/reg7.vhd
-Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 2015
--- Loading package STANDARD
--- Loading package TEXTIO
--- Loading package std_logic_1164
--- Compiling entity reg7
--- Compiling architecture Behavioral of reg7
 
 } {} {}} C:/Users/Daniel/Desktop/fuentes_alumnos/adder32.vhd {1 {vcom -work Mantis -2002 -explicit -stats=none C:/Users/Daniel/Desktop/fuentes_alumnos/adder32.vhd
 Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 2015
@@ -150,6 +142,14 @@ Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 
 -- Loading package NUMERIC_STD
 -- Compiling entity adder32
 -- Compiling architecture Behavioral of adder32
+
+} {} {}} C:/Users/Daniel/Desktop/fuentes_alumnos/reg7.vhd {1 {vcom -work Mantis -2002 -explicit -stats=none C:/Users/Daniel/Desktop/fuentes_alumnos/reg7.vhd
+Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 2015
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling entity reg7
+-- Compiling architecture Behavioral of reg7
 
 } {} {}} C:/Users/Daniel/Desktop/fuentes_alumnos/UA.vhd {1 {vcom -work Mantis -2002 -explicit -stats=none C:/Users/Daniel/Desktop/fuentes_alumnos/UA.vhd
 Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 2015
@@ -186,6 +186,14 @@ Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 
 -- Compiling entity MD_mas_MC
 -- Compiling architecture Behavioral of MD_mas_MC
 
+} {} {}} C:/Users/Daniel/Desktop/fuentes_alumnos/UD.vhd {1 {vcom -work Mantis -2002 -explicit -stats=none C:/Users/Daniel/Desktop/fuentes_alumnos/UD.vhd
+Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 2015
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling entity UD
+-- Compiling architecture Behavioral of UD
+
 } {} {}} C:/Users/Daniel/Desktop/fuentes_alumnos/Mips_segmentado_2018.vhd {1 {vcom -work Mantis -2002 -explicit -stats=none C:/Users/Daniel/Desktop/fuentes_alumnos/Mips_segmentado_2018.vhd
 Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 2015
 -- Loading package STANDARD
@@ -193,22 +201,6 @@ Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 
 -- Loading package std_logic_1164
 -- Compiling entity MIPs_segmentado
 -- Compiling architecture Behavioral of MIPs_segmentado
-
-} {} {}} C:/Users/Daniel/Desktop/fuentes_alumnos/UD.vhd {1 {vcom -work Mantis -2002 -explicit -stats=none C:/Users/Daniel/Desktop/fuentes_alumnos/UC_Mips.vhd
-Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 2015
--- Loading package STANDARD
--- Loading package TEXTIO
--- Loading package std_logic_1164
--- Compiling entity UC
--- Compiling architecture Behavioral of UC
-
-} {} {}} C:/Users/Daniel/Desktop/fuentes_alumnos/mux2_5bits.vhd {1 {vcom -work Mantis -2002 -explicit -stats=none C:/Users/Daniel/Desktop/fuentes_alumnos/mux2_5bits.vhd
-Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 2015
--- Loading package STANDARD
--- Loading package TEXTIO
--- Loading package std_logic_1164
--- Compiling entity mux2_5bits
--- Compiling architecture Behavioral of mux2_5bits
 
 } {} {}} C:/Users/Daniel/Desktop/fuentes_alumnos/add_Fp_trst.vhd {1 {vcom -work Mantis -2002 -explicit -stats=none C:/Users/Daniel/Desktop/fuentes_alumnos/add_Fp_trst.vhd
 Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 2015
@@ -218,6 +210,14 @@ Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 
 -- Loading package NUMERIC_STD
 -- Compiling entity testfp
 -- Compiling architecture behavior of testfp
+
+} {} {}} C:/Users/Daniel/Desktop/fuentes_alumnos/mux2_5bits.vhd {1 {vcom -work Mantis -2002 -explicit -stats=none C:/Users/Daniel/Desktop/fuentes_alumnos/mux2_5bits.vhd
+Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 2015
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling entity mux2_5bits
+-- Compiling architecture Behavioral of mux2_5bits
 
 } {} {}} C:/Users/Daniel/Desktop/fuentes_alumnos/counter_2bits.vhd {1 {vcom -work Mantis -2002 -explicit -stats=none C:/Users/Daniel/Desktop/fuentes_alumnos/counter_2bits.vhd
 Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 2015
@@ -230,14 +230,6 @@ Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 
 -- Compiling entity counter_2bits
 -- Compiling architecture Behavioral of counter_2bits
 
-} {} {}} C:/Users/Daniel/Desktop/fuentes_alumnos/mux4_1_32bits.vhd {1 {vcom -work Mantis -2002 -explicit -stats=none C:/Users/Daniel/Desktop/fuentes_alumnos/mux4_1_32bits.vhd
-Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 2015
--- Loading package STANDARD
--- Loading package TEXTIO
--- Loading package std_logic_1164
--- Compiling entity mux4_1_32bits
--- Compiling architecture Behavioral of mux4_1_32bits
-
 } {} {}} C:/Users/Daniel/Desktop/fuentes_alumnos/MD_cont.vhd {1 {vcom -work Mantis -2002 -explicit -stats=none C:/Users/Daniel/Desktop/fuentes_alumnos/MD_cont.vhd
 Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 2015
 -- Loading package STANDARD
@@ -247,6 +239,14 @@ Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 
 -- Loading package STD_LOGIC_UNSIGNED
 -- Compiling entity MD_cont
 -- Compiling architecture Behavioral of MD_cont
+
+} {} {}} C:/Users/Daniel/Desktop/fuentes_alumnos/mux4_1_32bits.vhd {1 {vcom -work Mantis -2002 -explicit -stats=none C:/Users/Daniel/Desktop/fuentes_alumnos/mux4_1_32bits.vhd
+Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 2015
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling entity mux4_1_32bits
+-- Compiling architecture Behavioral of mux4_1_32bits
 
 } {} {}} C:/Users/Daniel/Desktop/fuentes_alumnos/testbench_MD_mas_MC_alumnos.vhd {1 {vcom -work Mantis -2002 -explicit -stats=none C:/Users/Daniel/Desktop/fuentes_alumnos/testbench_MD_mas_MC_alumnos.vhd
 Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 2015
