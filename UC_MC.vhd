@@ -293,8 +293,8 @@ palabra <= palabra_UC;
         count_enable <= '1';
       end if;
     elsif (state = TheEnd) then
-      next_state <= noReady;
-      ready <= '0';
+      next_state <= Inicio;
+      ready <= '1';
       mux_origen <= '0';
       Frame <= '0';
       MC_tags_WE <= '0';
