@@ -1,0 +1,37 @@
+-lw, dirty_bit=0, hit=0
+-lw, dirty_bit=0, hit=1
+lw, dirty_bit=1, hit=0
+lw, dirty_bit=1, hit=1
+-str, dirty_bit=0, hit=0
+str, dirty_bit=0, hit=1
+-str, dirty_bit=1, hit=0
+-str, dirty_bit=1, hit=1
+
+0 -> 4
+4 -> 8
+
+12 -> 0a1fa1fa
+60 -> deadbea7
+
+Prueba 1:
+
+lw r0, 0(r31) 000010 11111 00000 0000000000000000  0be00000 Load sin dirty_bit y sin hit
+lw r1, 0(r0)  000010 00000 00001 0000000000000000  08010000 Load sin dirty_bit y con hit
+lw r2, 4(r1)  000010 00001 00010 0000000000000100  08220004 Load sin dirty_bit y con hit
+
+
+Prueba 2:
+
+lw r0, 12(r31)  000010 11111 00000 0000000000001100  0be0000c Load sin dirty_bit y sin hit
+str r0, 64(r31) 000011 11111 00000 0000000001000000  0fe00040 Store sin dirty_bit y sin hit
+lw r1, 60(r31)  000010 11111 00001 0000000000111100  0be1003c Load sin dirty_bit y sin hit
+str r0, 0(r31)  000011 11111 00000 0000000000000000  0fe00000 Store con dirty_bit y sin hit
+str r0, 4(r31) 	000011 11111 00000 0000000000000100  0fe00004 Store con dirty_bit y con hit
+
+
+Prueba 3:
+
+lw r0, 0(r31)  Load sin dirty_bit y sin hit
+str r0, 0(r0)  Store sin dirty_bit y con hit
+lw r1, 0(r31)  Load con dirty_bit y con hit
+lw r2, 64(r31) Load con dirty_bit y sin hit
