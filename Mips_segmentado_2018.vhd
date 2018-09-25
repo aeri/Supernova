@@ -258,6 +258,15 @@ COMPONENT Banco_MEM
          RW_WB : OUT  std_logic_vector(4 downto 0)
         );
     END COMPONENT; 
+
+COMPONENT counter is
+    Port ( clk : in  STD_LOGIC;
+           reset : in  STD_LOGIC;
+           count_enable : in  STD_LOGIC;
+           load : in  STD_LOGIC;
+           D_in  : in  STD_LOGIC_VECTOR (7 downto 0);
+       count : out  STD_LOGIC_VECTOR (7 downto 0));
+end COMPONENT;
 CONSTANT ARIT : STD_LOGIC_VECTOR (5 downto 0) := "000001";
 signal load_PC, PCSrc, RegWrite_ID, RegWrite_EX, RegWrite_MEM, RegWrite_WB, Z, Branch, RegDst_ID, RegDst_EX, ALUSrc_ID, ALUSrc_EX: std_logic;
 signal MemtoReg_ID, MemtoReg_EX, MemtoReg_MEM, MemtoReg_WB, MemWrite_ID, MemWrite_EX, MemWrite_MEM, MemRead_ID, MemRead_EX, MemRead_MEM: std_logic;
@@ -270,6 +279,8 @@ signal IR_op_code: std_logic_vector(5 downto 0);
 signal FP_add_ID, FP_add_EX, FP_done, FP_mux, Mem_ready: std_logic;
 signal MUX_ctrl_A, MUX_ctrl_B : std_logic_vector(1 downto 0);
 signal parar_EX, parar_ID, Parar_MEM, RegWrite_EX_mux_out, Kill_IF, reset_ID, load_ID, load_EX, reset_EX, load_MEM, reset_MEM, load_WB, reset_WB : std_logic;
+signal paradas_KillIF, paradas_ID, paradas_EX, paradas_MEM : std_logic_vector (7 downto 0);
+signal Count_datos_enable, Count_FP_enable : std_logic;
 begin
 pc: reg32 port map (	Din => PC_in, clk => clk, reset => reset, load => load_PC, Dout => PC_out);
 ------------------------------------------------------------------------------------
@@ -403,7 +414,7 @@ reset_MEM <= (not Parar_MEM and Parar_EX) or reset;
 -- Memoria de datos
 MD_MC: MD_mas_MC PORT MAP (CLK => CLK, ADDR => ALU_out_MEM, Din => BusB_MEM, WE => MemWrite_MEM, RE => MemRead_MEM, Dout => Mem_out, reset => reset, Mem_ready => Mem_ready);
 -- Banco que separa las etapas de Mem y WB
-Banco_MEM_WB: Banco_WB PORT MAP ( ALU_out_MEM => ALU_out_MEM, ALU_out_WB => ALU_out_WB, Mem_out => Mem_out, MDR => MDR, clk => clk, reset => reset, load => '1', MemtoReg_MEM => MemtoReg_MEM, RegWrite_MEM => RegWrite_MEM, 
+Banco_MEM_WB: Banco_WB PORT MAP ( ALU_out_MEM => ALU_out_MEM, ALU_out_WB => ALU_out_WB, Mem_out => Mem_out, MDR => MDR, clk => clk, reset => reset, load => load_WB, MemtoReg_MEM => MemtoReg_MEM, RegWrite_MEM => RegWrite_MEM, 
 											MemtoReg_WB => MemtoReg_WB, RegWrite_WB => RegWrite_WB, RW_MEM => RW_MEM, RW_WB => RW_WB );
 load_WB <= not (Parar_MEM);
 reset_WB <= reset;
@@ -412,5 +423,12 @@ mux_busW: mux2_1 port map (Din0 => ALU_out_WB, DIn1 => MDR, ctrl => MemtoReg_WB,
 -----------
 -- output no se usa para nada. Está puesto para que el sistema tenga alguna salida al exterior.
 output <= IR_ID;
+Count_datos_enable <= (Parar_ID and not (Parar_EX or Parar_MEM));
+Count_FP_enable <= (Parar_EX and not Parar_MEM);
+Count_control: counter port map (clk => clk, reset => reset, count_enable => Kill_IF, load => '0', D_in => "00000000", count => paradas_KillIF);
+Count_datos: counter port map (clk => clk, reset => reset, count_enable => Count_datos_enable, load => '0', D_in => "00000000", count => paradas_ID);
+Count_FP: counter port map (clk => clk, reset => reset, count_enable => Count_FP_enable, load => '0', D_in => "00000000", count => paradas_EX);
+Count_memoria: counter port map (clk => clk, reset => reset, count_enable => Parar_MEM, load => '0', D_in => "00000000", count => paradas_MEM);
+
 end Behavioral;
 

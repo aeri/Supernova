@@ -65,7 +65,7 @@ component counter_2bits is
 		           count : out  STD_LOGIC_VECTOR (1 downto 0)
 					  );
 end component;
-type state_type is (Inicio, Espera, Mem, TheEnd, noReady); -- Poner aqu� el nombre de los estados. Usad nombres descriptivos
+type state_type is (Inicio, Espera, Mem, TheEnd); -- Poner aqu� el nombre de los estados. Usad nombres descriptivos
 signal state, next_state : state_type;
 signal last_word: STD_LOGIC; --se activa cuando se est� pidiendo la �ltima palabra de un bloque
 signal count_enable: STD_LOGIC; -- se activa si se ha recibido una palabra de un bloque para que se incremente el contador de palabras
@@ -133,19 +133,7 @@ palabra <= palabra_UC;
       Replace_block <= '0';
       MC_WE <= '1';
       MC_RE <= '0';
-    elsif (state = Inicio and hit = '0' and RE = '1' and dirty_bit = '0') then
-      next_state <= Espera;
-      ready <= '0';
-      mux_origen <= '0';
-      Frame <= '1';
-      MC_tags_WE <= '0'; -- Lo actualizaremos al final de la transferencia para poder comprobar HIT todo el rato.
-      MC_RE <= '0';
-      MC_WE <= '0';
-      Update_dirty <= '0';
-      bus_WE <= '0';
-      bus_RE <= '1';
-      MC_send_addr <= '1';
-    elsif (state = Inicio and hit = '0' and WE = '1' and dirty_bit = '0') then
+    elsif (state = Inicio and hit = '0' and (RE = '1' or WE = '1') and dirty_bit = '0') then
       next_state <= Espera;
       ready <= '0';
       mux_origen <= '0';
@@ -154,10 +142,10 @@ palabra <= palabra_UC;
       MC_RE <= '0';
       MC_WE <= '0';
       Update_dirty <= '0';
-      bus_RE <= '1';
       bus_WE <= '0';
+      bus_RE <= '1';
       MC_send_addr <= '1';
-    elsif (state = Inicio and hit = '0' and RE = '1' and dirty_bit = '1') then
+    elsif (state = Inicio and hit = '0' and (RE = '1' or WE = '1') and dirty_bit = '1') then
       next_state <= Espera;
       ready <= '0';
       mux_origen <= '0';
@@ -169,93 +157,43 @@ palabra <= palabra_UC;
       bus_RE <= '0';
       bus_WE <= '1';
       MC_send_addr <= '1';
-    elsif (state = Inicio and hit = '0' and WE = '1' and dirty_bit = '1') then
-      next_state <= Espera;
-      ready <= '0';
-      mux_origen <= '0';
-      Frame <= '1';
-      MC_tags_WE <= '0';
-      MC_RE <= '0';
-      MC_WE <= '0';
-      Update_dirty <= '0';
-      bus_RE <= '0';
-      bus_WE <= '1';
-      MC_send_addr <= '1';
-    elsif (state = Espera and bus_TRDY = '0' and bus_DevSel = '0') then
+      Send_dirty <= '1';
+    elsif (state = Espera and (bus_TRDY = '0' or bus_DevSel = '0')) then
       next_state <= Espera;
       MC_send_addr <= '1';
       ready <= '0';
       Frame <= '1';
-      bus_RE <= RE;
-      bus_WE <= WE;
-    elsif (state = Espera and bus_TRDY = '0' and bus_DevSel = '1') then
-      next_state <= Espera;
-      ready <= '0';
-      Frame <= '1';
-      bus_RE <= RE;
-      bus_WE <= WE;
-    elsif (state = Espera and bus_DevSel = '0' and bus_TRDY = '1') then
-      next_state <= Inicio;
-      ready <= '1';
-      Frame <= '0';
-      bus_RE <= RE;
-      bus_WE <= WE;
+      bus_RE <= not dirty_bit;
+      bus_WE <= dirty_bit;
+      Send_dirty <= dirty_bit;
     elsif (state = Espera and bus_DevSel = '1' and bus_TRDY = '1') then
-      if (dirty_bit = '1') then
-        next_state <= Mem;
-        ready <= '0';
-        mux_origen <= '1';
-        Frame <= '1';
-        MC_tags_WE <= '0';
-        MC_RE <= '1';
-        MC_WE <= '0';
-        MC_send_data <= '1';
-        Update_dirty <= '0';
-        bus_RE <= '0';
-        bus_WE <= '1';
-        Send_dirty <= '1';
-        count_enable <= '1';
-      else
-        next_state <= Mem;
-        ready <= '0';
-        mux_origen <= '1';
-        Frame <= '1';
-        MC_tags_WE <= '0';
-        MC_RE <= '0';
-        MC_WE <= '1';
-        Update_dirty <= '0';
-        bus_RE <= '1';
-        bus_WE <= '0';
-        count_enable <= '1';
-      end if;
+      next_state <= Mem;
+      ready <= '0';
+      mux_origen <= '1';
+      Frame <= '1';
+      MC_tags_WE <= '0';
+      MC_RE <= dirty_bit;
+      MC_WE <= not dirty_bit;
+      MC_send_data <= dirty_bit;
+      Update_dirty <= '0';
+      bus_RE <= not dirty_bit;
+      bus_WE <= dirty_bit;
+      Send_dirty <= dirty_bit;
+      count_enable <= '1';
     elsif (state = Mem and last_word = '0' and bus_TRDY = '1') then
-      if (dirty_bit = '1') then
-        next_state <= Mem;
-        ready <= '0';
-        mux_origen <= '1';
-        Frame <= '1';
-        MC_tags_WE <= '0';
-        MC_send_data <= '1';
-        MC_RE <= '1';
-        MC_WE <= '0';
-        Update_dirty <= '0';
-        bus_RE <= '0';
-        bus_WE <= '1';
-        Send_dirty <= '1';
-        count_enable <= '1';
-      else
-        next_state <= Mem;
-        ready <= '0';
-        mux_origen <= '1';
-        Frame <= '1';
-        MC_tags_WE <= '0';
-        MC_RE <= '0';
-        MC_WE <= '1';
-        Update_dirty <= '0';
-        bus_RE <= '1';
-        bus_WE <= '0';
-        count_enable <= '1';
-      end if;
+      next_state <= Mem;
+      ready <= '0';
+      mux_origen <= '1';
+      Frame <= '1';
+      MC_tags_WE <= '0';
+      MC_send_data <= dirty_bit;
+      MC_RE <= dirty_bit;
+      MC_WE <= not dirty_bit;
+      Update_dirty <= '0';
+      bus_RE <= not dirty_bit;
+      bus_WE <= dirty_bit;
+      Send_dirty <= dirty_bit;
+      count_enable <= '1';
     elsif (state = Mem and bus_TRDY = '0') then
       next_state <= Mem;
       Frame <= '1';
@@ -266,46 +204,44 @@ palabra <= palabra_UC;
       bus_WE <= dirty_bit;
       count_enable <= '0';
     elsif (state = Mem and last_word = '1' and bus_TRDY = '1') then
-      if(dirty_bit = '1') then
+      next_state <= TheEnd;
+      ready <= '0';
+      mux_origen <= '1';
+      Frame <= '1';
+      MC_tags_WE <= '0';
+      MC_send_data <= dirty_bit;
+      MC_RE <= dirty_bit;
+      MC_WE <= not dirty_bit;
+      bus_RE <= not dirty_bit;
+      bus_WE <= dirty_bit;
+      Send_dirty <= dirty_bit;
+    elsif (state = TheEnd) then
+      if (dirty_bit = '1') then
         next_state <= Espera;
         ready <= '0';
-        mux_origen <= '1';
-        Frame <= '1';
+        mux_origen <= '0';
+        Frame <= '0';
         MC_tags_WE <= '0';
-        MC_send_data <= '1';
-        MC_RE <= '1';
-        MC_WE <= '0';
         Update_dirty <= '1';
         Replace_block <= '1';
         bus_RE <= '0';
-        bus_WE <= '1';
+        bus_WE <= '0';
+        MC_send_addr <= '1';
+        count_enable <= '1';
       else
-        next_state <= TheEnd;
-        ready <= '0';
-        mux_origen <= '1';
-        Frame <= '1';
+        next_state <= Inicio;
+        ready <= '1';
+        mux_origen <= '0';
+        Frame <= '0';
         MC_tags_WE <= '1';
-        MC_RE <= '0';
-        MC_WE <= '1';
-        Update_dirty <= '0';
-        bus_RE <= '1';
+        MC_RE <= RE;
+        MC_WE <= WE;
+        Update_dirty <= WE;
+        Replace_block <= '0';
+        bus_RE <= '0';
         bus_WE <= '0';
         count_enable <= '1';
       end if;
-    elsif (state = TheEnd) then
-      next_state <= Inicio;
-      ready <= '1';
-      mux_origen <= '0';
-      Frame <= '0';
-      MC_tags_WE <= '0';
-      MC_RE <= RE;
-      MC_WE <= WE;
-      Update_dirty <= '0';
-      bus_RE <= '0';
-      bus_WE <= '0';
-      count_enable <= '1';
-    elsif (state = noReady) then
-      ready <= '1';
-		end if;
+   end if;
    end process;
 end Behavioral;

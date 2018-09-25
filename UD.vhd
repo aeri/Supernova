@@ -22,11 +22,11 @@ end UD;
 Architecture Behavioral of UD is
 	signal Parar_ID_signal, Parar_EX_signal : STD_LOGIC;
 begin
-	-- Para evitar los riesgos de datos producidos por la instrucción LW en la etapa de ejecución cuando queremos leer en la etapa ID el registro a escribir por LW 
+	-- Para evitar los riesgos de datos producidos por la instrucción LW en la etapa de ejecución cuando queremos leer en la etapa ID el registro a escribir por LW
 	-- se comprueba que la operación es LOAD (MemRead_EX='1') y que los registos a utilizar en etapa ID y EX coincidan.
 	-- Tambien tenemos en cuenta que hay que parar una instruccion BEQ cuando surge un riesgo porque los registros que va a comparar van a ser modificados por las
 	-- instrucciones anteriores
-	Parar_ID_signal <= '1' when (((RW_EX=Reg_Rs_ID or RW_EX=Reg_Rt_ID) and MemRead_EX='1') or ( IR_op_code = "000100" and ((RW_EX = Reg_Rs_ID and RegWrite_EX='1') or (RW_EX = Reg_Rt_ID and RegWrite_EX='1') or (RW_MEM = Reg_Rs_ID and RegWrite_MEM='1') or (RW_MEM = Reg_Rt_ID and RegWrite_MEM='1')))) else '0';
+	Parar_ID_signal <= '1' when (((RW_EX=Reg_Rs_ID or (RW_EX=Reg_Rt_ID and IR_op_code/="000010")) and MemRead_EX='1') or ( IR_op_code = "000100" and ((RW_EX = Reg_Rs_ID and RegWrite_EX='1') or (RW_EX = Reg_Rt_ID and RegWrite_EX='1') or (RW_MEM = Reg_Rs_ID and RegWrite_MEM='1') or (RW_MEM = Reg_Rt_ID and RegWrite_MEM='1')))) else '0';
 	Parar_EX_signal <= '1' when (FP_add_EX='1' and FP_done='0') else '0';
 	Kill_IF <= not (Parar_ID_signal or Parar_EX_signal) and PCSrc;
 	Parar_ID <= Parar_ID_signal;
